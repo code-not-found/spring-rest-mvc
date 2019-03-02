@@ -1,6 +1,7 @@
 package com.codenotfound.repository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,14 +27,22 @@ public class PeopleRepository {
 
     public People save(People people) {
         String id = UUID.randomUUID().toString();
+        Date currentDate = new Date();
+
         people.setId(id);
+        people.setCreated(currentDate);
+        people.setEdited(currentDate);
         repo.put(id, people);
+
         return people;
     }
 
     public People update(String id, People people) {
         people.setId(id);
+        people.setCreated(repo.get(id).getCreated());
+        people.setEdited(new Date());
         repo.put(id, people);
+
         return people;
     }
 
